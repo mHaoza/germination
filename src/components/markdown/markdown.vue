@@ -1,5 +1,5 @@
 <template>
-  <div>HomePage</div>
+  <div>Markdown</div>
   <div class="markdown-body">
     <VueComponent />
   </div>
