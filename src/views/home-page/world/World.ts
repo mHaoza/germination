@@ -1,7 +1,7 @@
-import Basic from './Basic.js'
-import Sizes from '@/utils/Size.js'
-import ResourceTracker from '@/utils/ResourceTracker.js'
-import { Resources } from './Resources.js'
+import Basic from './Basic'
+import Sizes from '@/utils/Size'
+import ResourceTracker from '@/utils/ResourceTracker'
+import { Resources } from './Resources'
 
 interface IWorldOptions {
   dom: HTMLElement

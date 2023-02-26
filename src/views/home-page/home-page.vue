@@ -1,19 +1,17 @@
 <template>
-  <!-- <div ref="worldRef" class="home-page"></div> -->
-  <RamenShop />
+  <div ref="worldRef" class="home-page"></div>
 </template>
 
 <script setup lang="ts">
-import RamenShop from '@/components/ramen-shop/'
-// import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
-// import World from './world/World'
+import World from './world/World'
 
-// const worldRef = ref()
+const worldRef = ref()
 
-// onMounted(() => {
-//   new World({ dom: worldRef.value })
-// })
+onMounted(() => {
+  new World({ dom: worldRef.value })
+})
 </script>
 
 <style scoped>

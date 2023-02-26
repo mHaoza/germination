@@ -1,6 +1,9 @@
-import EventEmitter from './EventEmitter.js'
+import EventEmitter from './EventEmitter'
 
 export default class Sizes extends EventEmitter {
+  width
+  height
+  pixelRatio
   constructor() {
     super()
 
@@ -51,7 +54,7 @@ export default class Sizes extends EventEmitter {
     this.trigger('resize')
   }
 
-  sleep(ms) {
+  sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 }

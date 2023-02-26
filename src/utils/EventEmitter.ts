@@ -1,10 +1,23 @@
+interface IResolveName {
+  original: string
+  value: string
+  namespace: string
+}
+
 export default class EventEmitter {
+  callbacks: {
+    [prop: string]: {
+      [prpo: string]: (() => void)[]
+    }
+    base?: any
+  }
+
   constructor() {
     this.callbacks = {}
     this.callbacks.base = {}
   }
 
-  on(_names, callback) {
+  on(_names: string, callback: () => void) {
     // Errors
     if (typeof _names === 'undefined' || _names === '') {
       console.warn('wrong names')
@@ -20,7 +33,7 @@ export default class EventEmitter {
     const names = this.resolveNames(_names)
 
     // Each name
-    names.forEach((_name) => {
+    names.forEach((_name: string) => {
       // Resolve name
       const name = this.resolveName(_name)
 
@@ -39,7 +52,7 @@ export default class EventEmitter {
     return this
   }
 
-  off(_names) {
+  off(_names: string) {
     // Errors
     if (typeof _names === 'undefined' || _names === '') {
       console.warn('wrong name')
@@ -95,24 +108,24 @@ export default class EventEmitter {
     return this
   }
 
-  trigger(_name, _args) {
+  trigger(_name: string, _args?: any[]) {
     // Errors
     if (typeof _name === 'undefined' || _name === '') {
       console.warn('wrong name')
       return false
     }
 
-    let finalResult = null
+    let finalResult: any = null
     let result = null
 
     // Default args
     const args = !(_args instanceof Array) ? [] : _args
 
     // Resolve names (should on have one event)
-    let name = this.resolveNames(_name)
+    const names = this.resolveNames(_name)
 
     // Resolve name
-    name = this.resolveName(name[0])
+    const name = this.resolveName(names[0])
 
     // Default namespace
     if (name.namespace === 'base') {
@@ -122,8 +135,8 @@ export default class EventEmitter {
           this.callbacks[namespace] instanceof Object &&
           this.callbacks[namespace][name.value] instanceof Array
         ) {
-          this.callbacks[namespace][name.value].forEach(function (callback) {
-            result = callback.apply(this, args)
+          this.callbacks[namespace][name.value].forEach((callback) => {
+            result = callback.apply(this, args as [])
 
             if (typeof finalResult === 'undefined') {
               finalResult = result
@@ -140,8 +153,8 @@ export default class EventEmitter {
         return this
       }
 
-      this.callbacks[name.namespace][name.value].forEach(function (callback) {
-        result = callback.apply(this, args)
+      this.callbacks[name.namespace][name.value].forEach((callback) => {
+        result = callback.apply(this, args as [])
 
         if (typeof finalResult === 'undefined') finalResult = result
       })
@@ -150,17 +163,21 @@ export default class EventEmitter {
     return finalResult
   }
 
-  resolveNames(_names) {
+  resolveNames(_names: string) {
     let names = _names
     names = names.replace(/[^a-zA-Z0-9 ,/.]/g, '')
     names = names.replace(/[,/]+/g, ' ')
-    names = names.split(' ')
+    const namesArray = names.split(' ')
 
-    return names
+    return namesArray
   }
 
-  resolveName(name) {
-    const newName = {}
+  resolveName(name: string) {
+    const newName: IResolveName = {
+      original: '',
+      value: '',
+      namespace: ''
+    }
     const parts = name.split('.')
 
     newName.original = name

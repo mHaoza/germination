@@ -1,18 +1,57 @@
 import * as THREE from 'three'
-import Experience from '../Experience.js'
+import type { Group, WebGLRenderer } from 'three'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { BasisTextureLoader } from 'three/examples/jsm/loaders/BasisTextureLoader.js'
 import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader.js'
-import EventEmitter from './EventEmitter.js'
+import EventEmitter from './EventEmitter'
 
+interface ILoaders {
+  dracoLoader: DRACOLoader
+  gltfLoader: GLTFLoader
+  objLoader: OBJLoader
+  textureLoader: THREE.TextureLoader
+  cubeTextureLoader: THREE.CubeTextureLoader
+  basisTextureLoader: BasisTextureLoader
+  KTX2TextureLoader: KTX2Loader
+}
+
+export interface ISource {
+  name: string
+  type:
+    | 'gltfModel'
+    | 'objModel'
+    | 'texture'
+    | 'basisTexture'
+    | 'KTX2Texture'
+    | 'videoTexture'
+  path: string
+}
 export default class Resources extends EventEmitter {
-  constructor(sources) {
+  sources
+  renderer
+
+  items: {
+    [prop: string]: any
+  }
+  toLoad
+  loaded
+
+  video: {
+    [prop: string]: HTMLVideoElement
+  }
+  videoTexture: any
+
+  carousel1: any[]
+  carousel2: any[]
+
+  loaders!: ILoaders
+  constructor(sources: ISource[], renderer?: WebGLRenderer) {
     super()
 
-    this.experience = new Experience()
     this.sources = sources
-    this.renderer = this.experience.renderer.instance
+    this.renderer = renderer
 
     this.items = {}
     this.toLoad = this.sources.length
@@ -20,7 +59,6 @@ export default class Resources extends EventEmitter {
 
     this.video = {}
     this.videoTexture = {}
-    this.mychromavideotexturematerial = {}
 
     this.carousel1 = []
     this.carousel2 = []
@@ -30,7 +68,7 @@ export default class Resources extends EventEmitter {
   }
 
   setLoaders() {
-    this.loaders = {}
+    this.loaders = {} as ILoaders
     this.loaders.dracoLoader = new DRACOLoader()
     this.loaders.dracoLoader.setDecoderPath('/draco/')
     this.loaders.gltfLoader = new GLTFLoader()
@@ -40,11 +78,14 @@ export default class Resources extends EventEmitter {
 
     this.loaders.basisTextureLoader = new BasisTextureLoader()
     this.loaders.basisTextureLoader.setTranscoderPath('/basis/')
-    this.loaders.basisTextureLoader.detectSupport(this.renderer)
+    this.renderer &&
+      this.loaders.basisTextureLoader.detectSupport(this.renderer)
 
     this.loaders.KTX2TextureLoader = new KTX2Loader()
     this.loaders.KTX2TextureLoader.setTranscoderPath('/basis/')
-    this.loaders.KTX2TextureLoader.detectSupport(this.renderer)
+    this.renderer && this.loaders.KTX2TextureLoader.detectSupport(this.renderer)
+
+    this.loaders.objLoader = new OBJLoader()
   }
 
   startLoading() {
@@ -52,18 +93,22 @@ export default class Resources extends EventEmitter {
     for (const source of this.sources) {
       if (source.type === 'gltfModel') {
         this.loaders.gltfLoader.load(source.path, (file) => {
-          this.sourceLoaded(source, file)
+          this.sourceLoaded<GLTF>(source, file)
+        })
+      } else if (source.type === 'objModel') {
+        this.loaders.objLoader.load(source.path, (file) => {
+          this.sourceLoaded<Group>(source, file)
         })
       } else if (source.type === 'texture') {
         this.loaders.textureLoader.load(source.path, (file) => {
           file.flipY = false
           file.encoding = THREE.sRGBEncoding
-          this.sourceLoaded(source, file)
+          this.sourceLoaded<THREE.Texture>(source, file)
         })
       } else if (source.type === 'basisTexture') {
         this.loaders.basisTextureLoader.load(source.path, (file) => {
           file.encoding = THREE.sRGBEncoding
-          this.sourceLoaded(source, file)
+          this.sourceLoaded<THREE.CompressedTexture>(source, file)
 
           if (source.path.includes('smallScreen1')) {
             this.carousel1.push(file)
@@ -76,7 +121,7 @@ export default class Resources extends EventEmitter {
       } else if (source.type === 'KTX2Texture') {
         this.loaders.KTX2TextureLoader.load(source.path, (file) => {
           file.encoding = THREE.sRGBEncoding
-          this.sourceLoaded(source, file)
+          this.sourceLoaded<THREE.CompressedTexture>(source, file)
 
           // if(source.path.includes("smallScreen1"))
           // {this.carousel1.push(file)}
@@ -109,7 +154,7 @@ export default class Resources extends EventEmitter {
     }
   }
 
-  sourceLoaded(source, file) {
+  sourceLoaded<T>(source: ISource, file: T) {
     this.trigger('itemLoaded')
 
     this.items[source.name] = file
