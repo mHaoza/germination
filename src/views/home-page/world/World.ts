@@ -45,7 +45,12 @@ export default class World {
     })
 
     // 资源加载实例，传入一个资源加载完成的回调
-    this.resources = new Resources(() => {})
+    this.resources = new Resources(() => {
+      this.resources.mmd.Lumine.scale.set(10, 10, 10)
+      this.scene.add(this.resources.mmd.Lumine)
+    })
+
+    console.log('this.scene', this.scene)
 
     this.render()
   }

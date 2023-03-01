@@ -1,19 +1,24 @@
 // 资源管理器加载
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js'
 
 import resources from './Assets.js'
 
 type Callback = () => void
-interface IModles {
+interface IGLTF {
   [prop: string]: THREE.Group
+}
+interface IMMD {
+  [prop: string]: THREE.SkinnedMesh
 }
 
 export class Resources {
   private callback: Callback
   private manager: THREE.LoadingManager
   public textures
-  public models: IModles
+  public gltf: IGLTF
+  public mmd: IMMD
 
   constructor(callback: Callback) {
     // 资源加载完成的回调
@@ -21,7 +26,9 @@ export class Resources {
     // 贴图对象
     this.textures = {}
     // 模型对象
-    this.models = {}
+    this.gltf = {}
+    // mmd
+    this.mmd = {}
 
     this.manager = this.setLoadingManager()
     this.loadResources(this.manager)
@@ -70,11 +77,18 @@ export class Resources {
   // 加载资源
   loadResources(manager: THREE.LoadingManager) {
     const gltfLoader = new GLTFLoader(manager)
+    const mmdLoader = new MMDLoader(manager)
 
-    resources.models.forEach((item) => {
+    resources.gltf.forEach((item) => {
       gltfLoader.load(item.url, (gltf) => {
         const model = gltf.scene
-        this.models[item.name] = model
+        this.gltf[item.name] = model
+      })
+    })
+
+    resources.mmd.forEach((item) => {
+      mmdLoader.load(item.url, (mesh) => {
+        this.mmd[item.name] = mesh
       })
     })
   }

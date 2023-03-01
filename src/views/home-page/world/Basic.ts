@@ -21,10 +21,10 @@ export default class Basic {
     this.initLights(this.scene)
     this.controls = this.initControls(this.camera, this.renderer)
 
-    const geometry = new THREE.BoxGeometry(100, 100, 100)
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
-    const cube = new THREE.Mesh(geometry, material)
-    this.scene.add(cube)
+    // const geometry = new THREE.BoxGeometry(100, 100, 100)
+    // const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+    // const cube = new THREE.Mesh(geometry, material)
+    // this.scene.add(cube)
   }
 
   initScene() {
@@ -52,7 +52,7 @@ export default class Basic {
     renderer.outputEncoding = THREE.sRGBEncoding
     renderer.setPixelRatio(window.devicePixelRatio) // 设置屏幕像素比
     renderer.setSize(window.innerWidth, window.innerHeight) // 设置渲染器宽高
-    // renderer.setClearColor(0x000000)
+    renderer.setClearColor(0x000000)
     this.dom.appendChild(renderer.domElement) // 添加到dom中
 
     return renderer

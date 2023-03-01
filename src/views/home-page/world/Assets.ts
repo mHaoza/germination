@@ -3,6 +3,7 @@ interface IAsset {
   url: string
 }
 
-const models: IAsset[] = []
+const gltf: IAsset[] = []
+const mmd: IAsset[] = [{ url: '/mmd/Lumine/荧.pmx', name: 'Lumine' }]
 
-export default { models }
+export default { gltf, mmd }
