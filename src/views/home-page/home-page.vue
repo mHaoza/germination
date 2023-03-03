@@ -1,16 +1,18 @@
 <template>
-  <div ref="worldRef" class="home-page"></div>
+  <div ref="webglRef" class="home-page"></div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import World from './world/World'
+// import World from './world/World'
+import Experience from '@/threejs/genshinWorld/experience/experience'
 
-const worldRef = ref()
+const webglRef = ref<HTMLDivElement>()
 
 onMounted(() => {
-  new World({ dom: worldRef.value })
+  // new World({ dom: webglRef.value })
+  new Experience(webglRef.value!)
 })
 </script>
 
