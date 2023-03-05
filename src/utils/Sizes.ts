@@ -14,39 +14,26 @@ export default class Sizes extends EventEmitter {
 
     // Resize event
     window.addEventListener('resize', () => {
-      this.width = window.innerWidth
-      this.height = window.innerHeight
-      this.pixelRatio = Math.min(window.devicePixelRatio, 2)
-
-      this.trigger('resize')
+      this.resize()
     })
 
     //Orientation change event
     window.onorientationchange = async () => {
       await this.sleep(10)
-      this.width = window.innerWidth
-      this.height = window.innerHeight
-      this.pixelRatio = Math.min(window.devicePixelRatio, 2)
-
-      this.trigger('resize')
+      this.resize()
     }
 
     //Screen wake event
     document.addEventListener('visibilitychange', async () => {
-      if (!document.hidden) {
-        await this.sleep(500)
-        this.width = window.innerWidth
-        this.height = window.innerHeight
-        this.pixelRatio = Math.min(window.devicePixelRatio, 2)
+      if (document.hidden) return
 
-        this.trigger('resize')
-      }
+      await this.sleep(500)
+      this.resize()
     })
   }
 
   //manual trigger
   resize() {
-    console.log('click')
     this.width = window.innerWidth
     this.height = window.innerHeight
     this.pixelRatio = Math.min(window.devicePixelRatio, 2)

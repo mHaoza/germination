@@ -2,14 +2,19 @@ import * as THREE from 'three'
 import type Experience from '../experience'
 
 export class Camera extends THREE.PerspectiveCamera {
+  experience
   constructor(experience: Experience) {
-    const domElement = experience.domElement
-    super(45, domElement.offsetWidth / domElement.offsetHeight, 1, 1000)
+    super(45, experience.sizes.width / experience.sizes.height, 1, 1000)
+    this.experience = experience
 
     this.initParams()
   }
 
   initParams() {
-    this.position.y = 5
+    this.position.z = 5
+  }
+  resize() {
+    this.aspect = this.experience.sizes.width / this.experience.sizes.height
+    this.updateProjectionMatrix()
   }
 }
