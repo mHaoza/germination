@@ -8,7 +8,8 @@ export default class World {
     this.resources = experience.resources
 
     this.resources.on('loaded', () => {
-      this.experience.scene.add(experience.resources.mmd['Lumine'])
+      const Lumine = experience.resources.mmd['Lumine']
+      this.experience.scene.add(Lumine)
     })
   }
 }

@@ -10,7 +10,7 @@ export default class Lights {
   }
 
   initAmbientLight() {
-    const ambentLight = new THREE.AmbientLight()
+    const ambentLight = new THREE.AmbientLight(0xffffff, 0.7)
     this.scene.add(ambentLight)
 
     return ambentLight
