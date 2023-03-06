@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type Experience from '../experience'
 
-export class Renderer extends THREE.WebGLRenderer {
+export default class Renderer extends THREE.WebGLRenderer {
   experience
   constructor(experience: Experience) {
     super({

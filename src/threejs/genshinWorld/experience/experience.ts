@@ -1,7 +1,7 @@
 import Sizes from '@/utils/Sizes'
 import Time from '@/utils/Time'
 import * as THREE from 'three'
-import { Camera, Renderer, Controls } from './basic'
+import { Camera, Renderer, Controls, Resources, assets } from './basic'
 import World from './world/world'
 
 export default class Experience {
@@ -11,6 +11,7 @@ export default class Experience {
   public camera
   public renderer
   public controls
+  public resources
   public domElement
   public world
 
@@ -22,13 +23,13 @@ export default class Experience {
     this.camera = new Camera(this)
     this.renderer = new Renderer(this)
     this.controls = new Controls(this)
+    this.resources = new Resources(assets)
     this.world = new World(this)
 
     const geometry = new THREE.BoxGeometry(1, 1, 1)
     const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
     const cube = new THREE.Mesh(geometry, material)
     this.scene.add(cube)
-    this.renderer.render(this.scene, this.camera)
 
     this.sizes.on('resize', () => {
       this.resize()

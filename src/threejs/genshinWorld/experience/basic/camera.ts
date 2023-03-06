@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type Experience from '../experience'
 
-export class Camera extends THREE.PerspectiveCamera {
+export default class Camera extends THREE.PerspectiveCamera {
   experience
   constructor(experience: Experience) {
     super(45, experience.sizes.width / experience.sizes.height, 1, 1000)
