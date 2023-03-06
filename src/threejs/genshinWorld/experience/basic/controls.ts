@@ -4,5 +4,7 @@ import type Experience from '../experience'
 export default class Controls extends OrbitControls {
   constructor(experience: Experience) {
     super(experience.camera, experience.renderer.domElement)
+
+    this.target.set(0, 10, 0)
   }
 }
