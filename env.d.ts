@@ -33,6 +33,8 @@ declare module '*.md' {
   }
 }
 
-interface Window {
-  experience: any
-}
+declare let Ammo: any
+
+// interface Window {
+//   experience: any
+// }

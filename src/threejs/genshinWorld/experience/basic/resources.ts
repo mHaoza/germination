@@ -31,7 +31,11 @@ export default class Resources extends EventEmitter {
     this.mmdHelper = new MMDAnimationHelper()
     this.loaders = this.setLoaders()
 
-    this.startLoading()
+    Ammo().then((AmmoLib: any) => {
+      Ammo = AmmoLib
+
+      this.startLoading()
+    })
   }
 
   // 管理加载状态
