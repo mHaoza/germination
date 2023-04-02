@@ -43,5 +43,6 @@ export default class Experience {
   update() {
     this.controls.update()
     this.renderer.render(this.scene, this.camera)
+    this.resources.update(this.time.delta / 1000)
   }
 }

@@ -103,4 +103,7 @@ export default class Resources extends EventEmitter {
       }
     }
   }
+  update(delta: number) {
+    this.mmdHelper.update(delta)
+  }
 }
