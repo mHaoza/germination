@@ -3,6 +3,7 @@ import Time from '@/utils/Time'
 import * as THREE from 'three'
 import { Camera, Lights, Renderer, Controls, Resources, assets } from './basic'
 import World from './world/world'
+import Animation from './animation'
 
 export default class Experience {
   public sizes
@@ -14,6 +15,7 @@ export default class Experience {
   public controls
   public resources
   public domElement
+  public animation
   public world
 
   constructor(domElement: HTMLDivElement) {
@@ -26,6 +28,7 @@ export default class Experience {
     this.renderer = new Renderer(this)
     this.controls = new Controls(this)
     this.resources = new Resources(assets)
+    this.animation = new Animation()
     this.world = new World(this)
 
     this.sizes.on('resize', () => {
@@ -43,6 +46,6 @@ export default class Experience {
   update() {
     this.controls.update()
     this.renderer.render(this.scene, this.camera)
-    this.resources.update(this.time.delta / 1000)
+    this.animation.update(this.time.delta / 1000)
   }
 }

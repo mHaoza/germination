@@ -1,6 +1,8 @@
 import * as THREE from 'three'
-import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader'
-import { MMDAnimationHelper } from 'three/examples/jsm/animation/MMDAnimationHelper'
+import {
+  MMDLoader,
+  type MMDLoaderAnimationObject
+} from 'three/examples/jsm/loaders/MMDLoader'
 import EventEmitter from '@/utils/EventEmitter'
 
 interface ILoaders {
@@ -15,20 +17,18 @@ export interface ISource {
 }
 
 export interface IMmd {
-  [prop: string]: THREE.SkinnedMesh
+  [prop: string]: MMDLoaderAnimationObject
 }
 
 export default class Resources extends EventEmitter {
   sources
   loaders: ILoaders
   mmd: IMmd
-  mmdHelper: MMDAnimationHelper
   constructor(sources: ISource[]) {
     super()
 
     this.sources = sources
     this.mmd = {}
-    this.mmdHelper = new MMDAnimationHelper()
     this.loaders = this.setLoaders()
 
     Ammo().then((AmmoLib: any) => {
@@ -95,15 +95,9 @@ export default class Resources extends EventEmitter {
           return item.path
         })
         this.loaders.mmdLoader.loadWithAnimation(source.path, vmdUrl, (obj) => {
-          this.mmd[source.name] = obj.mesh
-          this.mmdHelper.add(obj.mesh, {
-            animation: obj.animation
-          })
+          this.mmd[source.name] = obj
         })
       }
     }
-  }
-  update(delta: number) {
-    this.mmdHelper.update(delta)
   }
 }
