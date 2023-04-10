@@ -12,6 +12,28 @@ const assets: ISource[] = [
         path: '/vmd/hello.vmd'
       }
     ]
+  },
+  {
+    name: 'Amber',
+    type: 'mmdModel',
+    path: '/mmd/Amber/安柏.pmx',
+    animations: [
+      {
+        name: 'hello',
+        path: '/vmd/hello.vmd'
+      }
+    ]
+  },
+  {
+    name: 'Xiangling',
+    type: 'mmdModel',
+    path: '/mmd/Xiangling/香菱.pmx',
+    animations: [
+      {
+        name: 'hello',
+        path: '/vmd/hello.vmd'
+      }
+    ]
   }
 ]
 
