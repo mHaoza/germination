@@ -6,7 +6,15 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomePage/HomePage.vue')
+      component: () => import('@/layouts/HomeLayout/HomeLayout.vue'),
+      redirect: '/home',
+      children: [
+        {
+          path: '/home',
+          component: import('@/views/HomePage/HomePage.vue'),
+          alias: '/'
+        }
+      ]
     },
     {
       path: '/post',
