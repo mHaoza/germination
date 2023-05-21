@@ -18,7 +18,15 @@ export default class World {
       Amber.mesh.position.set(15, 0, 0)
       Xiangling.mesh.position.set(-15, 0, 0)
 
-      console.log('Lumine', Lumine)
+      Xiangling.mesh.rotation.y = Math.PI / 18
+      Amber.mesh.rotation.y = -Math.PI / 18
+
+      // 阴影
+      Lumine.mesh.castShadow = true
+      Xiangling.mesh.castShadow = true
+      Amber.mesh.castShadow = true
+
+      // 修改色彩通道
       ;(Lumine.mesh.material as any[]).forEach((item) => {
         item.map.encoding = THREE.sRGBEncoding
       })
@@ -38,7 +46,6 @@ export default class World {
       this.animation.mmdHelper.add(Xiangling.mesh, {
         animation: Xiangling.animation
       })
-      console.log('Amber', Amber)
     })
   }
 }

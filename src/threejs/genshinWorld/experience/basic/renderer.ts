@@ -9,6 +9,8 @@ export default class Renderer extends THREE.WebGLRenderer {
       antialias: true, // 抗锯齿
       preserveDrawingBuffer: true // 是否保留缓直到手动清除或被覆盖
     })
+    this.shadowMap.enabled = true
+    this.shadowMap.type = THREE.PCFSoftShadowMap
     this.outputEncoding = THREE.sRGBEncoding
     this.experience = experience
     // 添加到dom中

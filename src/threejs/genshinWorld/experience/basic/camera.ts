@@ -11,7 +11,7 @@ export default class Camera extends THREE.PerspectiveCamera {
   }
 
   initParams() {
-    this.position.set(0, 20, 23)
+    this.position.set(0, 25, 55)
   }
   resize() {
     this.aspect = this.experience.sizes.width / this.experience.sizes.height
