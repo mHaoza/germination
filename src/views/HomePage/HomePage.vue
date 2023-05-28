@@ -1,28 +1,9 @@
 <template>
-  <div ref="webglRef" class="home-page" v-show="isShow"></div>
+  <Header />
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
-// import World from './world/World'
-import Experience from '@/threejs/genshinWorld/experience/experience'
-
-const webglRef = ref<HTMLDivElement>()
-
-onMounted(() => {
-  // new World({ dom: webglRef.value })
-  new Experience(webglRef.value!)
-})
-
-const isShow = ref(false)
-
-setInterval(() => {
-  const now = new Date().valueOf()
-  if (now >= 1684166400000) {
-    isShow.value = true
-  }
-}, 500)
+import Header from '@/components/Header'
 </script>
 
 <style scoped>
