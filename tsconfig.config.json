@@ -4,11 +4,14 @@
     "vite.config.*",
     "vitest.config.*",
     "cypress.config.*",
-    "playwright.config.*"
+    "playwright.config.*",
+    "scripts/**/*"
   ],
   "compilerOptions": {
     "composite": true,
     "types": ["node"],
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
     "ignoreDeprecations": "5.0"
   },
   "exclude": ["./commitlint.config.js"]
