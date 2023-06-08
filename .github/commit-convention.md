@@ -10,6 +10,25 @@ Messages must be matched by the following regex:
 /^(revert: )?(feat|fix|docs|dx|style|refactor|perf|test|workflow|build|ci|chore|types|wip)(\(.+\))?: .{1,50}/
 ```
 
+| Type     | 描述                                                                       |
+| -------- | -------------------------------------------------------------------------- |
+| feat     | 一个新功能                                                                 |
+| fix      | 一个bug                                                                    |
+| docs     | 文档增删改                                                                 |
+| style    | 样式修改(空白、格式、缺少分号等)                                           |
+| refactor | 既不修复bug也不添加新功能的更改                                            |
+| perf     | 性能优化                                                                   |
+| test     | 增加测试                                                                   |
+| build    | 影响构建系统或外部依赖项的更改(示例范围:gulp、broccoli、npm)               |
+| ci       | 对CI配置文件和脚本的更改(示例范围:Travis, Circle, BrowserStack, SauceLabs) |
+| chore    | 除src目录或测试文件以外的修改                                              |
+| types    | 类型修改                                                                   |
+| revert   | 回退历史版本                                                               |
+| conflict | 修改冲突                                                                   |
+| font     | 字体文件更新                                                               |
+| delete   | 删除文件                                                                   |
+| stash    | 暂存文件                                                                   |
+
 #### Examples
 
 Appears under "Features" header, `compiler` subheader:
