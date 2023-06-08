@@ -13,6 +13,5 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "ignoreDeprecations": "5.0"
-  },
-  "exclude": ["./commitlint.config.js"]
+  }
 }
