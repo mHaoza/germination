@@ -166,8 +166,8 @@ export async function highlight(
     }
 
     if (hasSingleTheme) return codeToHtml(theme)
-    const dark = addClass(codeToHtml(theme.dark), 'vp-code-dark', 'pre')
-    const light = addClass(codeToHtml(theme.light), 'vp-code-light', 'pre')
+    const dark = addClass(codeToHtml(theme.dark), 'code-dark', 'pre')
+    const light = addClass(codeToHtml(theme.light), 'code-light', 'pre')
     return dark + light
   }
 }
