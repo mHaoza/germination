@@ -5,7 +5,7 @@ title: test formatter
 加载mmd和动画控制
 
 ### title1
-```ts
+```ts {5}
 import * as THREE from 'three';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
